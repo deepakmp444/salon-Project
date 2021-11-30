@@ -1,0 +1,10 @@
+create table salon_tbl_registration(name varchar(20),mobile_no varchar(13),pwd varchar(18),role varchar(10),regdate varchar(20),PRIMARY KEY (mobile_no));
+
+create table salon_tbl_business(mobile_no varchar(13),business_id varchar(20),shop_name varchar(20), address varchar(30),est_date varchar(20),FOREIGN KEY (mobile_no ) REFERENCES salon_tbl_registration(mobile_no),PRIMARY KEY (business_id));
+
+create table salon_tbl_vendor_menu(menuid varchar(10), service_type varchar(20), cost int(7), mobile_no varchar(13),FOREIGN KEY (mobile_no) REFERENCES salon_tbl_registration(mobile_no),business_id varchar(20),PRIMARY KEY (menuid));
+
+create table salon_tbl_view_request( mobile_no varchar(13),business_id varchar(20),FOREIGN KEY (mobile_no) REFERENCES salon_tbl_registration(mobile_no),FOREIGN KEY (business_id) REFERENCES salon_tbl_business(business_id), service_type varchar(30), status varchar(10) DEFAULT 'Waiting',  ts TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP);
+
+create table salon_tbl_payment(item varchar(20),price(13));
+SELECT salon_tbl_business.shop_name, salon_tbl_business.business_id, salon_tbl_view_request.service_type, salon_tbl_view_request.status from salon_tbl_business NATURAL JOIN salon_tbl_view_request where salon_tbl_view_request.mobile_no = "1212";
